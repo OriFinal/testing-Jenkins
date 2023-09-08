@@ -7,24 +7,48 @@ pipeline {
                 checkout scm
             }
         }
-        
-        stage('Test') {
+        stage('Build') {
             steps {
 
-                echo "Testing ..."
+                echo "Using Maven tool"
             }
         }
         
-        stage('Deploy') {
+        stage('Unit and Integration Tests') {
             steps {
-
-                echo "Deploying ..."
+                
+                echo "Using JUnit or Selenium"
             }
         }
-         stage('Complee') {
+        
+        stage('Code Analysis') {
             steps {
 
-                echo "Completed !"
+                echo "Using SonarQube"
+            }
+        }
+         stage('Security Scan') {
+            steps {
+
+                echo "Using OWASP ZAP!"
+            }
+        }
+        stage('Deploy to Staging') {
+            steps {
+
+                echo "Deploying to AWS EC2"
+            }
+        }
+        stage('Integration Tests on Staging') {
+            steps {
+
+                echo "Testing with TestNG"
+            }
+        }
+        stage('Deploy to Production') {
+            steps {
+
+                echo "Deploying to AWS EC2+"
             }
         }
     }
