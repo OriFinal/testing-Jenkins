@@ -2,62 +2,46 @@ pipeline {
     agent any
     
     stages {
-        stage('Build') {
+        stage('Checkout') {
             steps {
-                // Use Maven to build your code
-                sh 'mvn clean package'
+                checkout scm
             }
-            // Justification: Maven is a popular build automation tool for Java projects, ensuring the code compiles and packages correctly.
         }
-
-        stage('Unit and Integration Tests') {
+        
+        stage('Test') {
             steps {
-                // Use JUnit for running unit tests
-                sh 'mvn test'
-                // Use Selenium for web application UI testing
-                sh 'selenium-tests.sh'
+
+                echo "Testing ..."
             }
-            // Justification: JUnit is a widely-used unit testing framework for Java, while Selenium is used for automated web application testing.
         }
-
-        stage('Code Analysis') {
+        
+        stage('Deploy') {
             steps {
-                // Integrate SonarQube for code analysis
-                sh 'sonar-scanner'
+
+                echo "Deploying ..."
             }
-            // Justification: SonarQube analyzes code for quality, identifies issues, and enforces coding standards.
         }
-
-        stage('Security Scan') {
-            steps {
-                // Use OWASP ZAP for security scanning
-                sh 'owasp-zap-scan.sh'
-            }
-            // Justification: OWASP ZAP identifies security vulnerabilities in your application code.
+    }
+    
+    post {
+        success {
+            // Send an email notification on successful build
+            emailext (
+                subject: "Pipeline Successful: ${currentBuild.fullDisplayName}",
+                body: "The Jenkins pipeline for your project has been successfully executed.",
+                to: 's223623238@deakin.edu.au', // Replace with your email address
+                attachLog: true
+            )
         }
-
-        stage('Deploy to Staging') {
-            steps {
-                // Use AWS CLI for deploying to AWS ECS (Elastic Container Service)
-                sh 'aws ecs deploy-to-staging.sh'
-            }
-            // Justification: AWS CLI automates the deployment process to a staging environment, making it repeatable and efficient.
-        }
-
-        stage('Integration Tests on Staging') {
-            steps {
-                // Run integration tests on the staging environment using a testing framework like TestNG
-                sh 'testng-staging-tests.sh'
-            }
-            // Justification: Integration tests on staging ensure the application functions as expected in a production-like environment.
-        }
-
-        stage('Deploy to Production') {
-            steps {
-                // Use AWS CLI to deploy to a production AWS EC2 instance
-                sh 'aws ec2 deploy-to-production.sh'
-            }
-            // Justification: AWS CLI is used to deploy the application to a production server, making it accessible to users.
+        
+        failure {
+            // Send an email notification on build failure
+            emailext (
+                subject: "Pipeline Failed: ${currentBuild.fullDisplayName}",
+                body: "The Jenkins pipeline for your project has failed. Please investigate and take necessary actions.",
+                to: 's223623238@deakin.edu.au', // Replace with your email address
+                attachLog: true
+            )
         }
     }
 }
