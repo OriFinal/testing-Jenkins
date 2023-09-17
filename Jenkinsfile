@@ -58,14 +58,14 @@ pipeline {
                     mail to: "final.divergence.drive@gmail.com",
                     subject: "Build Status Email",
                     body: "Build was successful!"
-            )
+            }
         }
         
         failure {
                     mail to: "final.divergence.drive@gmail.com",
                     subject: "Build Status Email",
                     body: "Build was failure!"
-            )
+            }
         }
     }
 }
