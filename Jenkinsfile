@@ -59,7 +59,7 @@ pipeline {
             emailext (
                 subject: "Pipeline Successful: ${currentBuild.fullDisplayName}",
                 body: "The Jenkins pipeline for your project has been successfully executed.",
-                to: 's223623238@deakin.edu.au', // Replace with your email address
+                to: 'final.divergence.drive@gmail.com', // Replace with your email address
                 attachLog: true
             )
         }
@@ -69,7 +69,7 @@ pipeline {
             emailext (
                 subject: "Pipeline Failed: ${currentBuild.fullDisplayName}",
                 body: "The Jenkins pipeline for your project has failed. Please investigate and take necessary actions.",
-                to: 's223623238@deakin.edu.au', // Replace with your email address
+                to: 'final.divergence.drive@gmail.com', // Replace with your email address
                 attachLog: true
             )
         }
