@@ -55,22 +55,16 @@ pipeline {
     
     post {
         success {
-            // Send an email notification on successful build
-            emailext (
-                subject: "Pipeline Successful: ${currentBuild.fullDisplayName}",
-                body: "The Jenkins pipeline for your project has been successfully executed.",
-                mail to: 'final.divergence.drive@gmail.com', // Replace with your email address
-                attachLog: true
+                    mail to: "final.divergence.drive@gmail.com",
+                    subject: "Build Status Email",
+                    body: "Build was successful!"
             )
         }
         
         failure {
-            // Send an email notification on build failure
-            emailext (
-                subject: "Pipeline Failed: ${currentBuild.fullDisplayName}",
-                body: "The Jenkins pipeline for your project has failed. Please investigate and take necessary actions.",
-                mail to: 'final.divergence.drive@gmail.com', // Replace with your email address
-                attachLog: true
+                    mail to: "final.divergence.drive@gmail.com",
+                    subject: "Build Status Email",
+                    body: "Build was failure!"
             )
         }
     }
