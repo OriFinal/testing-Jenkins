@@ -9,7 +9,7 @@ pipeline {
         }
         stage('Build') {
             steps {
-                echo "Using Maven tool"
+                echo "Using Maven tool!"
             }
         }
         stage('Unit and Integration Tests') {
